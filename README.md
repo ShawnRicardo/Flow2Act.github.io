@@ -20,7 +20,7 @@ python3 -m http.server 8000 --bind 127.0.0.1
 
 - `index.html`：页面结构与项目内容。
 - `assets/css/style.css`：页面样式和移动端适配。
-- `assets/js/main.js`：自动/亮色/暗色主题切换，保存用户偏好。
+- `assets/js/main.js`：每次打开默认使用亮色，可手动切换暗色。
 - `assets/videos/Flow2Act-demo.mp4`：H.264/AAC 网页播放版本，支持 faststart。
 - `assets/images/demo-poster.jpg`：从新版 demo 第 3 秒提取的封面。
 - `assets/videos/real-world/`：9 组真机对比 MP4 及封面。

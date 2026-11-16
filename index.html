@@ -1,33 +1,51 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f7f7fb">
+  <meta name="theme-color" content="#ffffff">
   <meta name="description" content="Flow2Act: Learning to Act through Geometrically Grounded Motion Anticipation. Project demo, real-world robot comparisons, and simulation benchmarks.">
   <title>Flow2Act | Learning to Act through Geometrically Grounded Motion Anticipation</title>
   <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/css/style.css">
-  <script src="assets/js/main.js" defer></script>
+  <link rel="stylesheet" href="assets/css/style.css?v=2">
+  <script src="assets/js/main.js?v=2" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#demo">Skip to demo</a>
-  <div class="vignette" aria-hidden="true"></div>
   <nav class="site-topbar" aria-label="Project navigation">
     <a class="brand" href="#top" aria-label="Flow2Act home"><span class="brand-mark" aria-hidden="true">F<span>2A</span></span>Flow2Act</a>
     <div class="theme-toggle">
-      <button class="theme-btn" id="toggleTheme" type="button" aria-label="Change color theme">
+      <button class="theme-btn" id="toggleTheme" type="button" aria-label="Switch to Night theme">
         <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor" stroke="none"/></svg>
         <span>Light / Night</span>
       </button>
-      <span class="theme-hint" id="themeHint" aria-live="polite">Auto</span>
+      <span class="theme-hint" id="themeHint" aria-live="polite">Light</span>
     </div>
   </nav>
   <header class="hero container" id="top">
     <p class="eyebrow">PROJECT PAGE</p>
     <h1 class="title">Flow2Act</h1>
     <h2 class="subtitle">Learning to Act through <span class="subtitle-accent">Geometrically</span><br class="desktop-break"> Grounded <span class="subtitle-accent">Motion</span> Anticipation</h2>
-    <!-- Add the confirmed author list and affiliations here when ready. -->
+    <div class="project-credits">
+      <ul class="project-authors" aria-label="Authors" role="list">
+        <li>Lijun Guo<sup>1</sup></li>
+        <li>Haoyu Zhao<sup>2</sup></li>
+        <li>Xianda Guo<sup>1</sup></li>
+        <li>Chengwei Wu<sup>3</sup></li>
+        <li>Yetong Zeng<sup>4</sup></li>
+        <li>Chenglong Zhang<sup>5</sup></li>
+        <li>Qian Zhou<sup>1</sup></li>
+        <li>Zhongyu Li<sup>2</sup></li>
+        <li>Hua Zou<sup>1</sup></li>
+      </ul>
+      <ul class="project-affiliations" aria-label="Affiliations" role="list">
+        <li><sup>1</sup> Wuhan University</li>
+        <li><sup>2</sup> The Chinese University of Hong Kong</li>
+        <li><sup>3</sup> NIO</li>
+        <li><sup>4</sup> University of Hong Kong</li>
+        <li><sup>5</sup> Nanjing University</li>
+      </ul>
+    </div>
     <nav class="pill-row resource-links" aria-label="Project resources">
       <a class="pill" role="link" aria-disabled="true" title="Paper link pending">
         <svg class="resource-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -37,7 +55,7 @@
         </svg>
         Paper
       </a>
-      <a class="pill" role="link" aria-disabled="true" title="GitHub link pending">
+      <a class="pill" href="https://github.com/ShawnRicardo/Flow2Act">
         <img class="resource-icon" src="assets/images/github.svg" alt="" width="20" height="20">
         GitHub
       </a>
