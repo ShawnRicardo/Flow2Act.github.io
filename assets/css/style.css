@@ -45,7 +45,6 @@ button,a { -webkit-tap-highlight-color: transparent; }
 .theme-btn svg,.pill svg { width: 19px; height: 19px; flex-shrink: 0; }
 .theme-hint { min-width: 30px; color: var(--muted); font-size: 12px; }
 .hero { padding-top: 124px; text-align: center; }
-.eyebrow { margin: 0 0 16px; color: var(--muted); font-size: 11px; letter-spacing: .22em; font-weight: 700; }
 .title { margin: 0; font-size: clamp(50px,5.8vw,76px); line-height: 1.08; letter-spacing: -.04em; font-weight: 900; }
 .subtitle { max-width: 1120px; margin: 18px auto 0; font-size: clamp(25px,3.65vw,48px); font-weight: 800; letter-spacing: -.03em; line-height: 1.22; color: var(--hero-subtitle-color); text-wrap: balance; }
 .title,
