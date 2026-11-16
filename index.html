@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7fb">
+  <meta name="description" content="Flow2Act: Learning to Act through Geometrically Grounded Motion Anticipation. Project demo, real-world robot comparisons, and simulation benchmarks.">
+  <title>Flow2Act | Learning to Act through Geometrically Grounded Motion Anticipation</title>
+  <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/main.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#demo">Skip to demo</a>
+  <div class="vignette" aria-hidden="true"></div>
+  <nav class="site-topbar" aria-label="Project navigation">
+    <a class="brand" href="#top" aria-label="Flow2Act home"><span class="brand-mark" aria-hidden="true">F<span>2A</span></span>Flow2Act</a>
+    <div class="theme-toggle">
+      <button class="theme-btn" id="toggleTheme" type="button" aria-label="Change color theme">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor" stroke="none"/></svg>
+        <span>Light / Night</span>
+      </button>
+      <span class="theme-hint" id="themeHint" aria-live="polite">Auto</span>
+    </div>
+  </nav>
+  <header class="hero container" id="top">
+    <p class="eyebrow">PROJECT PAGE</p>
+    <h1 class="title">Flow2Act</h1>
+    <h2 class="subtitle">Learning to Act through <span class="subtitle-accent">Geometrically</span><br class="desktop-break"> Grounded <span class="subtitle-accent">Motion</span> Anticipation</h2>
+    <!-- Add the confirmed author list and affiliations here when ready. -->
+    <nav class="pill-row resource-links" aria-label="Project resources">
+      <a class="pill" role="link" aria-disabled="true" title="Paper link pending">
+        <svg class="resource-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2.75h8l5 5v12a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 19.75V4.25A1.5 1.5 0 0 1 6 2.75Z" fill="#e0e7ff" stroke="#5b55c8" stroke-width="1.6"/>
+          <path d="M14 2.75v5h5" fill="#a5b4fc" stroke="#5b55c8" stroke-width="1.6"/>
+          <path d="M8.5 12h7m-7 4h5" stroke="#4f46b3" stroke-width="1.6"/>
+        </svg>
+        Paper
+      </a>
+      <a class="pill" role="link" aria-disabled="true" title="GitHub link pending">
+        <img class="resource-icon" src="assets/images/github.svg" alt="" width="20" height="20">
+        GitHub
+      </a>
+      <a class="pill" role="link" aria-disabled="true" title="Hugging Face link pending">
+        <img class="resource-icon" src="assets/images/hugging-face.svg" alt="" width="20" height="20">
+        Hugging Face
+      </a>
+    </nav>
+  </header>
+  <main class="container">
+    <section class="project-film" id="demo" aria-label="Project demo">
+      <div class="promo-wrap">
+        <div class="promo-inner">
+          <video id="mainVideo" controls playsinline preload="metadata" poster="assets/images/demo-poster.jpg" aria-label="Flow2Act project demonstration">
+            <source src="assets/videos/Flow2Act-demo.mp4" type="video/mp4">
+            Your browser does not support embedded video. <a href="assets/videos/Flow2Act-demo.mp4">Download the demo</a>.
+          </video>
+        </div>
+      </div>
+      <p class="video-error" id="videoError" role="alert" hidden>The video could not be loaded. <a href="assets/videos/Flow2Act-demo.mp4">Open the video directly</a>.</p>
+    </section>
+    <section class="content-section" id="abstract" aria-labelledby="abstract-heading">
+      <h2 class="section-heading" id="abstract-heading">Abstract</h2>
+      <div class="content-panel abstract-panel">
+        <p>Successful manipulation requires understanding scene geometry and anticipating how scene points will move during interaction. Action imitation supervises robot commands, but does not explicitly shape the vision-language-action (VLA) model’s representations of these spatial and temporal relationships. We present <strong>Flow2Act</strong>, a framework that uses geometrically grounded motion anticipation to condition action generation. Within a pretrained VLA, learnable future queries integrate current visual features with sparse observations from previous replanning steps. A frozen geometry teacher grounds the visual features via distillation, while paired 2D trajectories and relative-scale 3D displacement targets supervise the queries to anticipate where current scene anchors will move over the action horizon. The same query representations condition the native action generator through their layer-wise key-value states, providing a shared pathway for motion prediction and control. At deployment, Flow2Act uses <em>only</em> RGB observations, robot states, and decision history, without teacher networks and dense prediction heads. Evaluations across four pretrained VLA backbone and three simulation benchmarks show aggregate success gains over the corresponding base policies, complemented by experiments on five real-world manipulation tasks.</p>
+        <h3>Our contributions are as follows</h3>
+        <ul>
+          <li>We introduce <strong>Flow2Act</strong>, a framework in which future-query representations within a pretrained VLA receive geometrically grounded scene-motion supervision and directly condition the action generator.</li>
+          <li>We develop paired 2D and relative-scale 3D displacement supervision for current-image anchors across the action horizon, where motion anticipation is informed by static geometry distillation and sparse decision history.</li>
+          <li>We evaluate the framework across <strong>4</strong> pretrained VLA backbones on <strong>3</strong> simulation benchmarks, together with <strong>5</strong> real-world manipulation tasks, demonstrating aggregate improvements over the corresponding base policies.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="content-section" id="pipeline" aria-labelledby="pipeline-heading">
+      <h2 class="section-heading" id="pipeline-heading">Pipeline</h2>
+      <div class="content-panel pipeline-panel">
+        <img src="assets/images/pipeline.png" width="2400" height="1096" loading="lazy" decoding="async"
+             alt="Flow2Act pipeline showing sparse decision history, learnable future queries, depth and 2D/3D displacement supervision, and the action expert.">
+      </div>
+    </section>
+
+    <section class="content-section" id="real-world" aria-labelledby="real-world-heading">
+      <h2 class="section-heading" id="real-world-heading">Real-World Robot Comparisons</h2>
+      <p class="section-intro">Both rollouts play at 1×. The shorter rollout holds its final frame.</p>
+      <div class="comparison-grid">
+        <article class="comparison-card" aria-labelledby="task-01-heading">
+          <div class="comparison-header">
+            <h3 id="task-01-heading">Shirt Folding</h3>
+            <span>Task 01</span>
+          </div>
+          <div class="comparison-labels">
+            <span>Baseline (π₀.₅)</span>
+            <span>Ours</span>
+          </div>
+          <video controls playsinline preload="none" width="1440" height="600"
+                 poster="assets/videos/real-world/task-01.jpg"
+                 aria-label="Shirt Folding: π₀.₅ baseline on the left, Flow2Act on the right">
+            <source src="assets/videos/real-world/task-01.mp4" type="video/mp4">
+            <a href="assets/videos/real-world/task-01.mp4">Open the comparison video</a>
+          </video>
+        </article>
+        <article class="comparison-card" aria-labelledby="task-02-heading">
+          <div class="comparison-header">
+            <h3 id="task-02-heading">Strawberry Placement</h3>
+            <span>Task 02</span>
+          </div>
+          <div class="comparison-labels">
+            <span>Baseline (π₀.₅)</span>
+            <span>Ours</span>
+          </div>
+          <video controls playsinline preload="none" width="1440" height="600"
+                 poster="assets/videos/real-world/task-02.jpg"
+                 aria-label="Strawberry Placement: π₀.₅ baseline on the left, Flow2Act on the right">
+            <source src="assets/videos/real-world/task-02.mp4" type="video/mp4">
+            <a href="assets/videos/real-world/task-02.mp4">Open the comparison video</a>
+          </video>
+        </article>
+        <article class="comparison-card" aria-labelledby="task-03-heading">
+          <div class="comparison-header">
+            <h3 id="task-03-heading">Banana Placement</h3>
+            <span>Task 03</span>
+          </div>
+          <div class="comparison-labels">
+            <span>Baseline (π₀.₅)</span>
+            <span>Ours</span>
+          </div>
+          <video controls playsinline preload="none" width="1440" height="600"
+                 poster="assets/videos/real-world/task-03.jpg"
+                 aria-label="Banana Placement: π₀.₅ baseline on the left, Flow2Act on the right">
+            <source src="assets/videos/real-world/task-03.mp4" type="video/mp4">
+            <a href="assets/videos/real-world/task-03.mp4">Open the comparison video</a>
+          </video>
+        </article>
+        <article class="comparison-card" aria-labelledby="task-04-heading">
+          <div class="comparison-header">
+            <h3 id="task-04-heading">Object Transfer · Blue Box</h3>
+            <span>Task 04</span>
+          </div>
+          <div class="comparison-labels">
+            <span>Baseline (π₀.₅)</span>
+            <span>Ours</span>
+          </div>
+          <video controls playsinline preload="none" width="1440" height="600"
+                 poster="assets/videos/real-world/task-04.jpg"
+                 aria-label="Object Transfer · Blue Box: π₀.₅ baseline on the left, Flow2Act on the right">
+            <source src="assets/videos/real-world/task-04.mp4" type="video/mp4">
+            <a href="assets/videos/real-world/task-04.mp4">Open the comparison video</a>
+          </video>
+        </article>
+        <article class="comparison-card" aria-labelledby="task-05-heading">
+          <div class="comparison-header">
+            <h3 id="task-05-heading">Object Transfer · Green Box</h3>
+            <span>Task 05</span>
+          </div>
+          <div class="comparison-labels">
+            <span>Baseline (π₀.₅)</span>
+            <span>Ours</span>
+          </div>
+          <video controls playsinline preload="none" width="1440" height="600"
+                 poster="assets/videos/real-world/task-05.jpg"
+                 aria-label="Object Transfer · Green Box: π₀.₅ baseline on the left, Flow2Act on the right">
+            <source src="assets/videos/real-world/task-05.mp4" type="video/mp4">
+            <a href="assets/videos/real-world/task-05.mp4">Open the comparison video</a>
+          </video>
+        </article>
+        <article class="comparison-card" aria-labelledby="task-06-heading">
+          <div class="comparison-header">
+            <h3 id="task-06-heading">Stack Blocks</h3>
+            <span>Task 06</span>
+          </div>
+          <div class="comparison-labels">
+            <span>Baseline (GR00T)</span>
+            <span>Ours</span>
+          </div>
+          <video controls playsinline preload="none" width="1440" height="600"
+                 poster="assets/videos/real-world/task-06.jpg"
+                 aria-label="Stack Blocks: GR00T baseline on the left, Flow2Act on the right">
+            <source src="assets/videos/real-world/task-06.mp4" type="video/mp4">
+            <a href="assets/videos/real-world/task-06.mp4">Open the comparison video</a>
+          </video>
+        </article>
+        <article class="comparison-card" aria-labelledby="task-07-heading">
+          <div class="comparison-header">
+            <h3 id="task-07-heading">Block-to-Cup · Orange → Red</h3>
+            <span>Task 07</span>
+          </div>
+          <div class="comparison-labels">
+            <span>Baseline (π₀.₅)</span>
+            <span>Ours</span>
+          </div>
+          <video controls playsinline preload="none" width="1440" height="600"
+                 poster="assets/videos/real-world/task-07.jpg"
+                 aria-label="Block-to-Cup · Orange → Red: π₀.₅ baseline on the left, Flow2Act on the right">
+            <source src="assets/videos/real-world/task-07.mp4" type="video/mp4">
+            <a href="assets/videos/real-world/task-07.mp4">Open the comparison video</a>
+          </video>
+        </article>
+        <article class="comparison-card" aria-labelledby="task-08-heading">
+          <div class="comparison-header">
+            <h3 id="task-08-heading">Block-to-Cup · Red → Orange</h3>
+            <span>Task 08</span>
+          </div>
+          <div class="comparison-labels">
+            <span>Baseline (π₀.₅)</span>
+            <span>Ours</span>
+          </div>
+          <video controls playsinline preload="none" width="1440" height="600"
+                 poster="assets/videos/real-world/task-08.jpg"
+                 aria-label="Block-to-Cup · Red → Orange: π₀.₅ baseline on the left, Flow2Act on the right">
+            <source src="assets/videos/real-world/task-08.mp4" type="video/mp4">
+            <a href="assets/videos/real-world/task-08.mp4">Open the comparison video</a>
+          </video>
+        </article>
+        <article class="comparison-card" aria-labelledby="task-09-heading">
+          <div class="comparison-header">
+            <h3 id="task-09-heading">Drawer Storage</h3>
+            <span>Task 09</span>
+          </div>
+          <div class="comparison-labels">
+            <span>Baseline (π₀.₅)</span>
+            <span>Ours</span>
+          </div>
+          <video controls playsinline preload="none" width="1440" height="600"
+                 poster="assets/videos/real-world/task-09.jpg"
+                 aria-label="Drawer Storage: π₀.₅ baseline on the left, Flow2Act on the right">
+            <source src="assets/videos/real-world/task-09.mp4" type="video/mp4">
+            <a href="assets/videos/real-world/task-09.mp4">Open the comparison video</a>
+          </video>
+        </article>
+      </div>
+    </section>
+
+    <section class="content-section" id="experiments" aria-labelledby="experiments-heading">
+      <h2 class="section-heading" id="experiments-heading">Experimental Results</h2>
+      <p class="section-intro">Parentheses show percentage-point gains over the paired backbone.</p>
+      <nav class="experiment-nav" aria-label="Simulation benchmarks">
+        <a class="pill" href="#libero">LIBERO</a>
+        <a class="pill" href="#libero-plus">LIBERO-Plus</a>
+        <a class="pill" href="#robotwin">RoboTwin 2.0</a>
+      </nav>
+      <article class="content-panel experiment-panel" id="libero" aria-labelledby="libero-heading">
+        <h3 id="libero-heading">LIBERO</h3>
+        <p>Success rates across four suites. Avg. is the mean across the suites.</p>
+        <div class="experiment-table-scroll" tabindex="0" role="region" aria-label="LIBERO results table">
+          <table class="experiment-table">
+            <caption>LIBERO success rate (%) · Appendix, Table 12</caption>
+            <thead>
+              <tr><th scope="col">Model</th><th scope="col">Spatial</th><th scope="col">Object</th><th scope="col">Goal</th><th scope="col">Long</th><th scope="col">Avg.</th></tr>
+            </thead>
+            <tbody>
+                <tr><th scope="row">X-VLA</th><td>98.20</td><td>98.60</td><td>97.80</td><td>97.60</td><td>98.10</td></tr>
+                <tr><th scope="row">ABot-M0</th><td>98.80</td><td>99.80</td><td>99.00</td><td>96.60</td><td>98.60</td></tr>
+                <tr><th scope="row">StarVLA-OFT (Qwen3-VL)</th><td>97.80</td><td>98.60</td><td>96.20</td><td>93.80</td><td>96.60</td></tr>
+                <tr><th scope="row">Galaxea G0.5</th><td>98.40</td><td>100.00</td><td>98.60</td><td>98.60</td><td>98.90</td></tr>
+                <tr><th scope="row">GR00T-N1.7</th><td>98.20</td><td>99.00</td><td>98.00</td><td>88.40</td><td>95.90</td></tr>
+                <tr class="ours-row"><th scope="row">Ours (GR00T-N1.7)</th><td>99.40</td><td>99.80</td><td>99.80</td><td>94.80</td><td>98.45 <span class="table-gain">(+2.55)</span></td></tr>
+                <tr><th scope="row">π₀.₅</th><td>98.80</td><td>98.20</td><td>98.00</td><td>92.40</td><td>96.85</td></tr>
+                <tr class="ours-row"><th scope="row">Ours (π₀.₅)</th><td>99.60</td><td>98.80</td><td>97.60</td><td>93.00</td><td>97.25 <span class="table-gain">(+0.40)</span></td></tr>
+                <tr><th scope="row">Xiaomi-Robotics-0</th><td>98.80</td><td>100.00</td><td>98.80</td><td>97.20</td><td>98.70</td></tr>
+                <tr class="ours-row"><th scope="row">Ours (Xiaomi-Robotics-0)</th><td>99.60</td><td>100.00</td><td>99.00</td><td>97.80</td><td>99.10 <span class="table-gain">(+0.40)</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+      <article class="content-panel experiment-panel" id="libero-plus" aria-labelledby="libero-plus-heading">
+        <h3 id="libero-plus-heading">LIBERO-Plus</h3>
+        <p>Zero-shot evaluation under seven perturbations. Total is the overall benchmark score.</p>
+        <div class="experiment-table-scroll" tabindex="0" role="region" aria-label="LIBERO-Plus results table">
+          <table class="experiment-table">
+            <caption>LIBERO-Plus success rate (%) · Appendix, Table 13</caption>
+            <thead>
+              <tr><th scope="col">Model</th><th scope="col">Camera</th><th scope="col">Robot</th><th scope="col">Language</th><th scope="col">Light</th><th scope="col">Background</th><th scope="col">Noise</th><th scope="col">Layout</th><th scope="col">Total</th></tr>
+            </thead>
+            <tbody>
+                <tr><th scope="row">X-VLA</th><td>23.40</td><td>89.70</td><td>75.70</td><td>88.20</td><td>96.00</td><td>62.70</td><td>71.80</td><td>71.40</td></tr>
+                <tr><th scope="row">ABot-M0</th><td>60.40</td><td>67.90</td><td>86.40</td><td>96.20</td><td>91.60</td><td>86.40</td><td>82.60</td><td>80.50</td></tr>
+                <tr><th scope="row">StarVLA-OFT (Qwen3-VL)</th><td>47.00</td><td>60.10</td><td>87.00</td><td>96.30</td><td>95.30</td><td>73.10</td><td>79.20</td><td>75.00</td></tr>
+                <tr><th scope="row">GR00T-N1.7</th><td>47.65</td><td>30.06</td><td>81.26</td><td>92.99</td><td>94.80</td><td>76.08</td><td>70.43</td><td>68.31</td></tr>
+                <tr class="ours-row"><th scope="row">Ours (GR00T-N1.7)</th><td>60.03</td><td>80.06</td><td>86.99</td><td>97.64</td><td>96.47</td><td>78.14</td><td>80.85</td><td>80.39 <span class="table-gain">(+12.08)</span></td></tr>
+                <tr><th scope="row">π₀.₅</th><td>78.40</td><td>73.60</td><td>80.80</td><td>96.20</td><td>94.10</td><td>89.00</td><td>84.50</td><td>84.40</td></tr>
+                <tr class="ours-row"><th scope="row">Ours (π₀.₅)</th><td>84.60</td><td>84.00</td><td>84.19</td><td>97.96</td><td>96.29</td><td>90.38</td><td>86.30</td><td>87.48 <span class="table-gain">(+3.08)</span></td></tr>
+                <tr><th scope="row">Xiaomi-Robotics-0</th><td>40.22</td><td>55.63</td><td>89.02</td><td>94.51</td><td>90.43</td><td>86.78</td><td>75.87</td><td>74.50</td></tr>
+                <tr class="ours-row"><th scope="row">Ours (Xiaomi-Robotics-0)</th><td>58.61</td><td>68.26</td><td>92.48</td><td>96.72</td><td>96.53</td><td>88.24</td><td>81.51</td><td>81.73 <span class="table-gain">(+7.23)</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+      <article class="content-panel experiment-panel" id="robotwin" aria-labelledby="robotwin-heading">
+        <h3 id="robotwin-heading">RoboTwin 2.0</h3>
+        <p>Success rates for bimanual manipulation under clean and randomized conditions.</p>
+        <div class="experiment-table-scroll" tabindex="0" role="region" aria-label="RoboTwin 2.0 results table">
+          <table class="experiment-table">
+            <caption>RoboTwin 2.0 success rate (%) · Main paper, Table 3</caption>
+            <thead>
+              <tr><th scope="col">Model</th><th scope="col">Clean</th><th scope="col">Random</th></tr>
+            </thead>
+            <tbody>
+                <tr><th scope="row">X-VLA</th><td>72.8</td><td>72.8</td></tr>
+                <tr><th scope="row">ABot-M0</th><td>86.1</td><td>85.1</td></tr>
+                <tr><th scope="row">StarVLA</th><td>88.2</td><td>88.3</td></tr>
+                <tr><th scope="row">RynnVLA-Latent</th><td>88.7</td><td>88.4</td></tr>
+                <tr><th scope="row">Galaxea G0.5</th><td>93.7</td><td>92.8</td></tr>
+                <tr><th scope="row">π₀.₅</th><td>82.7</td><td>76.8</td></tr>
+                <tr class="ours-row"><th scope="row">Ours (π₀.₅)</th><td>87.3 <span class="table-gain">(+4.6)</span></td><td>82.6 <span class="table-gain">(+5.8)</span></td></tr>
+                <tr><th scope="row">LingBot-VLA 2.0</th><td>93.5</td><td>92.8</td></tr>
+                <tr class="ours-row"><th scope="row">Ours (LingBot-VLA 2.0)</th><td>94.0 <span class="table-gain">(+0.5)</span></td><td>93.6 <span class="table-gain">(+0.8)</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+  </main>
+  <footer class="footer container">
+    <span>Flow2Act</span>
+    <p>Page design adapted from <a href="https://github.com/alibaba-damo-academy/RynnWorld-Latent.github.io" target="_blank" rel="noopener noreferrer">RynnWorld-Latent ↗</a></p>
+  </footer>
+</body>
+</html>
