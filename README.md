@@ -22,7 +22,7 @@ python3 -m http.server 8000 --bind 127.0.0.1
 - `assets/css/style.css`：页面样式和移动端适配。
 - `assets/js/main.js`：每次打开默认使用亮色，可手动切换暗色。
 - `assets/videos/Flow2Act-demo.mp4`：H.264/AAC 网页播放版本，支持 faststart。
-- `assets/images/demo-poster.jpg`：从新版 demo 第 3 秒提取的封面。
+- `assets/images/demo-poster.jpg`：从 demo 首帧提取的封面，使用淡出前的完整标题画面。
 - `assets/videos/real-world/`：9 组真机对比 MP4 及封面。
 
 实验表格取自论文 PDF 的 Table 12（LIBERO）、Table 13（LIBERO-Plus）和 Table 3（RoboTwin 2.0）。
